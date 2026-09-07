@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Log | Strain Tracker</title>
+    <style>
+        :root {
+            --primary: #2c3e50; / Sophisticated Slate /
+            --accent: #27ae60;  / Deep Green /
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #333;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .container { width: 100%; max-width: 400px; }
+        h1 { color: var(--primary); text-align: center; margin-bottom: 5px; }
+        p.subtitle { text-align: center; color: #7f8c8d; margin-top: 0; margin-bottom: 25px; font-size: 14px; }
+
+        / Form Styling /
+        .card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.3s ease;
+        }
+        button:active { transform: scale(0.98); }
+
+        / List Styling /
+        .history-header { font-size: 18px; color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px;}
+        .item-card {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-info b { display: block; font-size: 18px; color: var(--primary); }
+        .item-info span { color: #95a5a6; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .rating { font-size: 18px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>✈️ Flight Log</h1>
+    <p class="subtitle">Personal Strain Journal</p>
+
+    <!-- Input Form -->
+    <div class="card">
+        <input type="text" id="strainName" placeholder="Strain Name">
+        <input type="text" id="brandName" placeholder="Brand/Company">
+        <select id="type">
+            <option value="Indica">Indica</option>
+            <option value="Sativa">Sativa</option>
+            <option value="Hybrid">Hybrid</option>
+        </select>
+        <input type="number" id="rating" placeholder="Rating (1-5)" min="1" max="5">
+        <button onclick="saveItem()">Log Flight</button>
+    </div>
+
+    <!-- History List -->
+    <div id="historyList">
+        <!-- Items will appear here -->
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', displayItems);
+
+    function saveItem() {
+        const name = document.getElementById('strainName').value;
+        const brand = document.getElementById('brandName').value;
+        const type = document.getElementById('type').value;
+        const rating = document.getElementById('rating').value;
+
+        if(!name || !rating) {
+            alert("Please enter at least a name and a rating!");
+            return;
+        }
+
+        const newItem = {
+            id: Date.now(),
+            name,
+            brand,
+            type,
+            rating
+        };
+
+        const items = JSON.parse(localStorage.getItem('flightLogData') || '[]');
+        items.push(newItem);
+        localStorage.setItem('flightLogData', JSON.stringify(items));
+
+        document.getElementById('strainName').value = '';
+        document.getElementById('brandName').value = '';
+        document.getElementById('rating').value = '';
+
+        displayItems();
+    }
+
+    function displayItems() {
+        const listElement = document.getElementById('historyList');
+        const items = JSON.parse(localStorage.getItem('flightLogData') || '[]');
+
+        listElement.innerHTML = '<div class="history-header">Recent Flights</div>';
+
+        if (items.length === 0) {
+            listElement.innerHTML += '<p style="text-align:center; color:#bdc3c7;">No flights logged yet.</p>';
+            return;
+        }
+
+        // Show newest first
+        [...items].reverse().forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'item-card';
+            div.innerHTML = `
+                <div class="item-info">
+                    <b>${item.name}</b>
+                    <span>${item.brand} • ${item.type}</span>
+                </div>
+                <div class="rating">${'⭐'.repeat(item.rating)}</div>
+            `;
+            listElement.appendChild(div);
+        });
+    }
+</script>
+
+</body>
+</html>
