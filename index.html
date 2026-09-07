@@ -2,96 +2,126 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flight Log | Strain Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>StashTrack | Experience Journal</title>
     <style>
         :root {
-            --primary: #2c3e50; / Sophisticated Slate /
-            --accent: #27ae60;  / Deep Green /
-            --bg: #f8f9fa;
+            --primary: #1a2a23; / Deep Forest Green /
+            --accent: #4caf50;  / Leaf Green /
+            --bg: #f0f2f0;
             --card: #ffffff;
-            --text: #333;
+            --text: #2c3e50;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            margin: 0; padding: 20px;
+            margin: 0; padding: 15px;
             display: flex; flex-direction: column; align-items: center;
         }
-        .container { width: 100%; max-width: 400px; }
-        h1 { color: var(--primary); text-align: center; margin-bottom: 5px; }
-        p.subtitle { text-align: center; color: #7f8c8d; margin-top: 0; margin-bottom: 25px; font-size: 14px; }
+        .container { width: 100%; max-width: 450px; }
+        h1 { color: var(--primary); text-align: center; margin-bottom: 2px; font-size: 28px; }
+        p.subtitle { text-align: center; color: #7f8c8d; margin-top: 0; margin-bottom: 20px; font-size: 14px; }
 
         / Form Styling /
         .card {
             background: var(--card);
             padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             margin-bottom: 25px;
         }
-        input, select, button {
+        label { font-size: 12px; font-weight: bold; color: #7f8c8d; text-transform: uppercase; margin-left: 5px; }
+        input, select, textarea {
             width: 100%;
             padding: 14px;
-            margin: 8px 0;
-            border-radius: 10px;
-            border: 1px solid #eee;
+            margin: 6px 0 15px 0;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
             box-sizing: border-box;
             font-size: 16px;
+            background: #fafafa;
         }
-        input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+        textarea { resize: none; height: 80px; }
+
         button {
-            background-color: var(--primary);
+            width: 100%;
+            padding: 16px;
+            background-color: var(--accent);
             color: white;
             border: none;
+            border-radius: 12px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
-            transition: background 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
         }
-        button:active { transform: scale(0.98); }
+        button:active { transform: scale(0.97); }
 
         / List Styling /
-        .history-header { font-size: 18px; color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px;}
+        .history-header { font-size: 18px; color: var(--primary); margin: 20px 5px 10px 5px; font-weight: bold; }
         .item-card {
             background: white;
-            padding: 15px;
-            border-radius: 12px;
+            padding: 16px;
+            border-radius: 16px;
             margin-bottom: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
-        .item-info b { display: block; font-size: 18px; color: var(--primary); }
-        .item-info span { color: #95a5a6; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .rating { font-size: 18px; }
+        .item-main { display: flex; justify-content: space-between; align-items: flex-start; }
+        .item-info b { display: block; font-size: 20px; color: var(--primary); }
+        .item-info span { color: #95a5a6; font-size: 13px; }
+        .item-meta { margin-top: 8px; font-size: 14px; color: #444; display: flex; gap: 10px; }
+        .tag { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+        .rating { font-size: 20px; }
+        .notes-text { margin-top: 10px; font-style: italic; color: #7f8c8d; font-size: 14px; border-top: 1px solid #eee; padding-top: 8px; }
     </style>
 </head>
 <body>
-
 <div class="container">
-    <h1>✈️ Flight Log</h1>
-    <p class="subtitle">Personal Strain Journal</p>
+    <h1>🌿 StashTrack</h1>
+    <p class="subtitle">Your Personal Experience Journal</p>
 
     <!-- Input Form -->
     <div class="card">
-        <input type="text" id="strainName" placeholder="Strain Name">
-        <input type="text" id="brandName" placeholder="Brand/Company">
-        <select id="type">
-            <option value="Indica">Indica</option>
-            <option value="Sativa">Sativa</option>
-            <option value="Hybrid">Hybrid</option>
-        </select>
-        <input type="number" id="rating" placeholder="Rating (1-5)" min="1" max="5">
-        <button onclick="saveItem()">Log Flight</button>
+        <label>Strain Name</label>
+        <input type="text" id="strainName" placeholder="e.g. Blue Dream">
+
+        <label>Brand/Source</label>
+        <input type="text" id="brandName" placeholder="e.g. Local Dispensary">
+
+        <div style="display: flex; gap: 10px;">
+            <div style="flex: 1;">
+                <label>Type</label>
+                <select id="type">
+                    <option value="Indica">Indica</option>
+                    <option value="Sativa">Sativa</option>
+                    <option value="Hybrid">Hybrid</option>
+                </select>
+            </div>
+            <div style="flex: 1;">
+                <label>Effect</label>
+                <select id="effect">
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Energetic">Energetic</option>
+                    <option value="Creative">Creative</option>
+                    <option value="Focused">Focused</option>
+                    <option value="Sleepy">Sleepy</option>
+                </select>
+            </div>
+        </div>
+
+        <label>Rating (1-5)</label>
+        <input type="number" id="rating" placeholder="5" min="1" max="5">
+
+        <label>Flavor & Terpene Notes</label>
+        <textarea id="notes" placeholder="e.g. Citrusy, heavy myrcene..."></textarea>
+
+        <button onclick="saveItem()">Log Experience</button>
     </div>
 
     <!-- History List -->
-    <div id="historyList">
-        <!-- Items will appear here -->
-    </div>
+    <div id="historyList"></div>
 </div>
 
 <script>
@@ -101,7 +131,9 @@
         const name = document.getElementById('strainName').value;
         const brand = document.getElementById('brandName').value;
         const type = document.getElementById('type').value;
+        const effect = document.getElementById('effect').value;
         const rating = document.getElementById('rating').value;
+        const notes = document.getElementById('notes').value;
 
         if(!name || !rating) {
             alert("Please enter at least a name and a rating!");
@@ -113,41 +145,51 @@
             name,
             brand,
             type,
-            rating
+            effect,
+            rating,
+            notes
         };
 
-        const items = JSON.parse(localStorage.getItem('flightLogData') || '[]');
+        const items = JSON.parse(localStorage.getItem('stashTrackData') || '[]');
         items.push(newItem);
-        localStorage.setItem('flightLogData', JSON.stringify(items));
+        localStorage.setItem('stashTrackData', JSON.stringify(items));
 
+        // Reset fields
         document.getElementById('strainName').value = '';
         document.getElementById('brandName').value = '';
         document.getElementById('rating').value = '';
+        document.getElementById('notes').value = '';
 
         displayItems();
     }
 
     function displayItems() {
         const listElement = document.getElementById('historyList');
-        const items = JSON.parse(localStorage.getItem('flightLogData') || '[]');
+        const items = JSON.parse(localStorage.getItem('stashTrackData') || '[]');
 
-        listElement.innerHTML = '<div class="history-header">Recent Flights</div>';
+        listElement.innerHTML = '<div class="history-header">Recent Logs</div>';
 
         if (items.length === 0) {
-            listElement.innerHTML += '<p style="text-align:center; color:#bdc3c7;">No flights logged yet.</p>';
+            listElement.innerHTML += '<p style="text-align:center; color:#bdc3c7;">No logs yet.</p>';
             return;
         }
 
-        // Show newest first
         [...items].reverse().forEach(item => {
             const div = document.createElement('div');
             div.className = 'item-card';
             div.innerHTML = `
-                <div class="item-info">
-                    <b>${item.name}</b>
-                    <span>${item.brand} • ${item.type}</span>
+                <div class="item-main">
+                    <div class="item-info">
+                        <b>${item.name}</b>
+                        <span>${item.brand || 'Unknown Brand'}</span>
+                    </div>
+                    <div class="rating">${'⭐'.repeat(item.rating)}</div>
                 </div>
-                <div class="rating">${'⭐'.repeat(item.rating)}</div>
+                <div class="item-meta">
+                    <span class="tag">${item.type}</span>
+                    <span class="tag" style="background:#e3f2fd; color:#1976d2;">${item.effect}</span>
+                </div>
+                ${item.notes ? `<div class="notes-text">${item.notes}</div>` : ''}
             `;
             listElement.appendChild(div);
         });
