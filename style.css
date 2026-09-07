@@ -1,0 +1,134 @@
+:root {
+    --primary: #1a2a23;
+    --accent: #4caf50;
+    --accent-hover: #43a047;
+    --accent-disabled: #bdc3c7;
+    --bg: #f4f7f4;
+    --card: #ffffff;
+    --text: #2c3e50;
+    --text-light: #7f8c8d;
+    --danger: #e74c3c;
+}
+ {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container { width: 100%; max-width: 450px; }
+
+h1 { color: var(--primary); text-align: center; margin-bottom: 2px; font-size: 32px; letter-spacing: -1px; }
+p.subtitle { text-align: center; color: var(--text-light); margin-top: 0; margin-bottom: 25px; font-size: 15px; }
+
+/ Form Styling /
+.card {
+    background: var(--card);
+    padding: 24px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    margin-left: 4px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    border: 1.5px solid #eee;
+    font-size: 16px;
+    background: #fafafa;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    background: #fff;
+}
+
+.row { display: flex; gap: 12px; }
+.row > div { flex: 1; }
+
+/ Button Logic /
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--accent-disabled);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: not-allowed;
+    margin-top: 10px;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+.submit-btn.ready {
+    background-color: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+}
+
+.submit-btn.ready:active {
+    transform: scale(0.95);
+    background-color: var(--accent-hover);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/ List Styling */
+.history-header { font-size: 18px; color: var(--primary); margin: 25px 5px 15px 5px; font-weight: 700; }
+
+.item-card {
+    background: white;
+    padding: 18px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.item-main { display: flex; justify-content: space-between; align-items: flex-start; }
+.item-info b { display: block; font-size: 20px; color: var(--primary); margin-bottom: 2px; }
+.item-info span { color: var(--text-light); font-size: 13px; }
+
+.delete-btn {
+    background: none; border: none; color: #ccc; font-size: 20px; cursor: pointer; padding: 0 5px; margin-left: 10px;
+}
+.delete-btn:hover { color: var(--danger); }
+
+.rating { font-size: 18px; letter-spacing: -2px; }
+.item-meta { margin-top: 12px; display: flex; gap: 8px; }
+.tag { padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.tag-type { background: #e8f5e9; color: #2e7d32; }
+.tag-effect { background: #e3f2fd; color: #1976d2; }
+
+.notes-text { margin-top: 14px; font-style: italic; color: var(--text-light); font-size: 14px; border-top: 1px solid #f0f0f0; padding-top: 12px; line-height: 1.4; }
+.empty-state { text-align: center; color: #bdc3c7; margin-top: 40px; font-size: 15px; }
