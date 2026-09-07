@@ -8,76 +8,158 @@
         :root {
             --primary: #1a2a23; / Deep Forest Green /
             --accent: #4caf50;  / Leaf Green /
-            --bg: #f0f2f0;
+            --accent-light: #e8f5e9;
+            --bg: #f4f7f4;
             --card: #ffffff;
             --text: #2c3e50;
+            --text-light: #7f8c8d;
+            --danger: #e74c3c;
         }
+         { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            margin: 0; padding: 15px;
-            display: flex; flex-direction: column; align-items: center;
+            margin: 0;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
         .container { width: 100%; max-width: 450px; }
-        h1 { color: var(--primary); text-align: center; margin-bottom: 2px; font-size: 28px; }
-        p.subtitle { text-align: center; color: #7f8c8d; margin-top: 0; margin-bottom: 20px; font-size: 14px; }
+
+        h1 { color: var(--primary); text-align: center; margin-bottom: 2px; font-size: 32px; letter-spacing: -1px; }
+        p.subtitle { text-align: center; color: var(--text-light); margin-top: 0; margin-bottom: 25px; font-size: 15px; }
 
         / Form Styling /
         .card {
             background: var(--card);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
+            padding: 24px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
         }
-        label { font-size: 12px; font-weight: bold; color: #7f8c8d; text-transform: uppercase; margin-left: 5px; }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            margin-left: 4px;
+        }
+
         input, select, textarea {
             width: 100%;
             padding: 14px;
-            margin: 6px 0 15px 0;
+            margin-bottom: 18px;
             border-radius: 12px;
-            border: 1px solid #e0e0e0;
-            box-sizing: border-box;
-            font-size: 16px;
+            border: 1.5px solid #eee;
+            font-size: 16px; / Prevents iOS zoom on focus /
             background: #fafafa;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
         }
-        textarea { resize: none; height: 80px; }
 
-        button {
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-light);
+            background: #fff;
+        }
+
+        textarea { resize: none; height: 90px; }
+
+        .row { display: flex; gap: 12px; }
+        .row > div { flex: 1; }
+
+        button.submit-btn {
             width: 100%;
             padding: 16px;
             background-color: var(--accent);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
             margin-top: 10px;
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+            transition: transform 0.1s, background 0.2s;
         }
-        button:active { transform: scale(0.97); }
 
-        / List Styling /
-        .history-header { font-size: 18px; color: var(--primary); margin: 20px 5px 10px 5px; font-weight: bold; }
+        button.submit-btn:active { transform: scale(0.97); background-color: #43a047; }
+
+        / List Styling */
+        .history-header {
+            font-size: 18px;
+            color: var(--primary);
+            margin: 25px 5px 15px 5px;
+            font-weight: 700;
+        }
+
         .item-card {
             background: white;
-            padding: 16px;
-            border-radius: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            padding: 18px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .item-main { display: flex; justify-content: space-between; align-items: flex-start; }
-        .item-info b { display: block; font-size: 20px; color: var(--primary); }
-        .item-info span { color: #95a5a6; font-size: 13px; }
-        .item-meta { margin-top: 8px; font-size: 14px; color: #444; display: flex; gap: 10px; }
-        .tag { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
-        .rating { font-size: 20px; }
-        .notes-text { margin-top: 10px; font-style: italic; color: #7f8c8d; font-size: 14px; border-top: 1px solid #eee; padding-top: 8px; }
+
+        .item-info b { display: block; font-size: 20px; color: var(--primary); margin-bottom: 2px; }
+        .item-info span { color: var(--text-light); font-size: 13px; }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0 5px;
+            margin-left: 10px;
+        }
+
+        .delete-btn:hover { color: var(--danger); }
+
+        .rating { font-size: 18px; letter-spacing: -2px; }
+
+        .item-meta { margin-top: 12px; display: flex; gap: 8px; }
+        .tag {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .tag-type { background: var(--accent-light); color: #2e7d32; }
+        .tag-effect { background: #e3f2fd; color: #1976d2; }
+
+        .notes-text {
+            margin-top: 14px;
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 14px;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 12px;
+            line-height: 1.4;
+        }
+
+        .empty-state { text-align: center; color: #bdc3c7; margin-top: 40px; font-size: 15px; }
     </style>
 </head>
 <body>
+
 <div class="container">
     <h1>🌿 StashTrack</h1>
     <p class="subtitle">Your Personal Experience Journal</p>
@@ -90,8 +172,8 @@
         <label>Brand/Source</label>
         <input type="text" id="brandName" placeholder="e.g. Local Dispensary">
 
-        <div style="display: flex; gap: 10px;">
-            <div style="flex: 1;">
+        <div class="row">
+            <div>
                 <label>Type</label>
                 <select id="type">
                     <option value="Indica">Indica</option>
@@ -99,7 +181,7 @@
                     <option value="Hybrid">Hybrid</option>
                 </select>
             </div>
-            <div style="flex: 1;">
+            <div>
                 <label>Effect</label>
                 <select id="effect">
                     <option value="Relaxed">Relaxed</option>
@@ -111,13 +193,13 @@
             </div>
         </div>
 
-        <label>Rating (1-5)</label>
+        <label>Rating (1-5 Stars)</label>
         <input type="number" id="rating" placeholder="5" min="1" max="5">
 
         <label>Flavor & Terpene Notes</label>
         <textarea id="notes" placeholder="e.g. Citrusy, heavy myrcene..."></textarea>
 
-        <button onclick="saveItem()">Log Experience</button>
+        <button class="submit-btn" onclick="saveItem()">Log Experience</button>
     </div>
 
     <!-- History List -->
@@ -146,7 +228,7 @@
             brand,
             type,
             effect,
-            rating,
+            rating: parseInt(rating),
             notes
         };
 
@@ -163,16 +245,31 @@
         displayItems();
     }
 
+    function deleteItem(id) {
+        if(!confirm("Delete this entry?")) return;
+
+        let items = JSON.parse(localStorage.getItem('stashTrackData') || '[]');
+        items = items.filter(item => item.id !== id);
+        localStorage.setItem('stashTrackData', JSON.stringify(items));
+        displayItems();
+    }
+
     function displayItems() {
         const listElement = document.getElementById('historyList');
         const items = JSON.parse(localStorage.getItem('stashTrackData') || '[]');
 
-        listElement.innerHTML = '<div class="history-header">Recent Logs</div>';
+        listElement.innerHTML = '';
 
         if (items.length === 0) {
-            listElement.innerHTML += '<p style="text-align:center; color:#bdc3c7;">No logs yet.</p>';
+            listElement.innerHTML = '<p class="empty-state">No logs yet. Start your journey above.</p>';
             return;
         }
+
+        // Add header only if there are items
+        const header = document.createElement('div');
+        header.className = 'history-header';
+        header.innerText = 'Recent Logs';
+        listElement.appendChild(header);
 
         [...items].reverse().forEach(item => {
             const div = document.createElement('div');
@@ -183,11 +280,14 @@
                         <b>${item.name}</b>
                         <span>${item.brand || 'Unknown Brand'}</span>
                     </div>
-                    <div class="rating">${'⭐'.repeat(item.rating)}</div>
+                    <div style="display: flex; align-items: center;">
+                        <div class="rating">${'⭐'.repeat(item.rating)}</div>
+                        <button class="delete-btn" onclick="deleteItem(${item.id})">×</button>
+                    </div>
                 </div>
                 <div class="item-meta">
-                    <span class="tag">${item.type}</span>
-                    <span class="tag" style="background:#e3f2fd; color:#1976d2;">${item.effect}</span>
+                    <span class="tag tag-type">${item.type}</span>
+                    <span class="tag tag-effect">${item.effect}</span>
                 </div>
                 ${item.notes ? `<div class="notes-text">${item.notes}</div>` : ''}
             `;
